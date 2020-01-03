@@ -6,6 +6,7 @@
     "mobiscroll": "^3.0.0-beta6",
     "react": "latest",
     "react-currency-input": "^1.3.6",
+    "react-document-title": "^2.0.3",
     "react-dom": "latest",
     "react-recaptcha": "^2.3.10",
     "react-recaptcha-google": "^1.1.1",

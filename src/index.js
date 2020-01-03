@@ -8,16 +8,22 @@ import Security from './Security';
 import Amount from './Amount';
 import ExpiryDate from './ExpiryDate';
 import { loadReCaptcha } from 'react-recaptcha-google'
+import DocumentTitle from 'react-document-title';
 import {
   Form,
   Input,
   Select,
   Button,
-  AutoComplete
+  AutoComplete,
+  Checkbox
 } from "antd";
 import { Layout } from "antd";
 import PhoneNumber from "./PhoneNumber";
-
+{/*
+  Project : WooTech PCI-DSS Compliant App
+  Team: Front-End
+  Owner: Surabhi Malani
+*/}
 const { Header, Footer, Content } = Layout;
 
 const { Option } = Select;
@@ -61,8 +67,10 @@ const AutoCompleteOption = AutoComplete.Option;
 class RegistrationForm extends React.Component {
   state = {
     confirmDirty: false,
-    autoCompleteResult: []
+    autoCompleteResult: [],
+    checked: true,
   };
+  
   componentDidMount() {
     loadReCaptcha();
   };
@@ -111,7 +119,10 @@ class RegistrationForm extends React.Component {
     }
     this.setState({ autoCompleteResult });
   };
-
+  toggleChecked = () => {
+    this.setState({ checked: !this.state.checked });
+  };
+  
   render() {
     const { getFieldDecorator } = this.props.form;
     const { autoCompleteResult } = this.state;
@@ -141,6 +152,8 @@ class RegistrationForm extends React.Component {
       initialValue: "86"
     })(
       <Select style={{ width: 70 }}>
+        <Option value="1">+1</Option>
+        <Option value="65">+65</Option>
         <Option value="86">+86</Option>
         <Option value="87">+87</Option>
       </Select>
@@ -151,6 +164,7 @@ class RegistrationForm extends React.Component {
     ));
 
     return (
+      
       <Form className= "form-color"{...formItemLayout} onSubmit={this.handleSubmit}>
         <br/>
         <Form.Item label="FirstName" >
@@ -203,7 +217,7 @@ class RegistrationForm extends React.Component {
             rules: [
               {
                 required: true,
-                message: "Please input the name on your card"
+                message: "Please input the amount payable !"
               }
             ]
           })(<Amount/>)}
@@ -213,7 +227,7 @@ class RegistrationForm extends React.Component {
             rules: [
               {
                 required: true,
-                message: "Please input the name on your card"
+                message: "Please input the name on your card !"
               }
             ]
           })(<Input style={{ width: 400}}/>)}
@@ -223,7 +237,7 @@ class RegistrationForm extends React.Component {
             rules: [
               {
                 required: true,
-                message: "Please input your card number!"
+                message: "Please input your card number !"
               }
             ]
           })(
@@ -235,11 +249,11 @@ class RegistrationForm extends React.Component {
             rules: [
               {
                 required: true,
-                message: "Please input your expiration date!"
+                message: "Please input your expiration date !"
               }
             ]
           })(
-            <ExpiryDate
+            <ExpiryDate 
           />
           )}
         </Form.Item>
@@ -248,7 +262,7 @@ class RegistrationForm extends React.Component {
             rules: [
               {
                 required: true,
-                message: "Please input your security number!"
+                message: "Please input your security number !"
               }
             ]
           })(
@@ -260,35 +274,35 @@ class RegistrationForm extends React.Component {
           />
           )}
         </Form.Item>
-        <Form.Item label="Biling Address 1">
+        <Form.Item label="Billing Address 1">
           {getFieldDecorator("address1", {
             rules: [
               {
                 required: true,
-                message: "Please input your billing address!"
+                message: "Please input your billing address !"
               }
             ]
           })(<Input />)}
         </Form.Item>
-        <Form.Item label="Biling Address 2">
+        <Form.Item label="Billing Address 2">
           {getFieldDecorator("address2", {})(<Input />)}
         </Form.Item>
-        <Form.Item label="Country">
+        <Form.Item label="Billing Address Country">
           {getFieldDecorator("country", {
             rules: [
               {
                 required: true,
-                message: "Please input your country!"
+                message: "Please input your country !"
               }
             ]
           })(<Input />)}
         </Form.Item>
-        <Form.Item label="Zipcode">
+        <Form.Item label="Billing Address Zipcode">
           {getFieldDecorator("zipcode", {
             rules: [
               {
                 required: true,
-                message: "Please input your zipcode!"
+                message: "Please input your billing zipcode !"
               }
             ]
           })(<NumericInput 
@@ -298,13 +312,72 @@ class RegistrationForm extends React.Component {
             which ={10} 
           />)}
         </Form.Item>
+        <Form.Item label=" ">
+          {getFieldDecorator('remember', {
+            valuePropName: 'checked',
+            initialValue: true
+          })(<Checkbox  
+            checked={this.state.checked}
+            disabled={this.state.disabled} 
+            onClick={this.toggleChecked} 
+            style ={{color :"white"}} >Shipping Address is the same as Billing Address</Checkbox>)}
+        </Form.Item>
+        {(this.state.checked ) ? (
+          console.log("checked"
+          )
+          ): (
+            console.log("unchecked"),
+            <div>
+            <Form.Item label="Shipping Address 1">
+            {getFieldDecorator("shipaddress1", {
+            rules: [
+              {
+                required: true,
+                message: "Please input your shipping address !"
+              }
+            ]
+          })(<Input />)}
+          </Form.Item>
+          <Form.Item label="Shipping Address 2">
+         {getFieldDecorator("shipaddress2", {})(<Input />)}
+     </Form.Item>
+     <Form.Item label="Shipping Address Country">
+          {getFieldDecorator("ship_country", {
+            rules: [
+              {
+                required: true,
+                message: "Please input your country !"
+              }
+            ]
+          })(<Input />)}
+        </Form.Item>
+        <Form.Item label="Shipping Address Zipcode">
+          {getFieldDecorator("ship_zipcode", {
+            rules: [
+              {
+                required: true,
+                message: "Please input your zipcode !"
+              }
+            ]
+          })(<NumericInput 
+            style={{ width: 120}}
+            value={this.state.value}
+            onChange={this.onChange}
+            which ={10} 
+          />)}
+        </Form.Item>
+            </div>
+        ) 
+        }
+        
+        
 
         <Form.Item label="E-mail">
           {getFieldDecorator("email", {
             rules: [
               {
                 type: "email",
-                message: "The input is not valid E-mail!"
+                message: "The input is not valid E-mail !"
               },
               {
                 required: true,
@@ -378,7 +451,7 @@ class RegistrationForm extends React.Component {
                 rules: [
                   {
                     required: true, 
-                    message: "We must make sure that your are a human."
+                    message: "We must make sure that your are a human !"
                   }
                 ]
               })(<Security
@@ -389,14 +462,14 @@ class RegistrationForm extends React.Component {
         <Form.Item label="Phone Number">
           {getFieldDecorator("phone", {
             rules: [
-              { required: true, message: "Please input your phone number!" }
+              { required: true, message: "Please input your phone number !" }
             ]
           })(<Input addonBefore={prefixSelector} style={{ width: "100%" }} />)}
         </Form.Item>
         <Form.Item label="Phone Number">
           {getFieldDecorator("phoneNew", {
             rules: [
-              { required: true, message: "Please input your phone number!" }
+              { required: true, message: "Please input your phone number !" }
             ]
           })(<PhoneNumber  />)}
         </Form.Item>
@@ -427,6 +500,7 @@ const WrappedRegistrationForm = Form.create({ name: "register" })(
 
 ReactDOM.render(
   <div>
+    <DocumentTitle title="Payment Page" key="title" />,
     <Layout>
       <Header>Welcome</Header>
       <Content>

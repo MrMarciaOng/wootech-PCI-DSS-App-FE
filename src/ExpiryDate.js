@@ -15,7 +15,7 @@ class ExpiryDate extends React.Component {
       const { size } = this.state;
       return (
         <div>
-          <MonthPicker size={size} />
+          <MonthPicker style={{ width: 100}} size={size} placeholder = ""/>
         </div>
       );
     }
