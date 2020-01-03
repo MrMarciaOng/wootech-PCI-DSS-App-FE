@@ -23,6 +23,7 @@ import PhoneNumber from "./PhoneNumber";
   Project : WooTech PCI-DSS Compliant App
   Team: Front-End
   Owner: Surabhi Malani
+  Background Image is © SURABHI MALANI (500PX)
 */}
 const { Header, Footer, Content } = Layout;
 

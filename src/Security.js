@@ -5,7 +5,7 @@ import { ReCaptcha } from 'react-recaptcha-google'
   Project : WooTech PCI-DSS Compliant App
   Team: Front-End
   Owner: Surabhi Malani
-  Used: https://medium.com/codeep-io/how-to-use-google-recaptcha-with-react-38a5cd535e0d
+  Used: Cleave.js for formatting
 */}
 class Security extends Component {
   constructor(props, context) {
