@@ -2,6 +2,12 @@ import React from 'react';
 import Cleave from 'cleave.js/react';
 import './imageStyle.css';
 import CleavePhone from 'cleave.js/dist/addons/cleave-phone.i18n';
+{/*
+  Project : WooTech PCI-DSS Compliant App
+  Team: Front-End
+  Owner: Surabhi Malani
+  Used: Cleave.js for formatting
+*/}
 class PhoneNumber extends React.Component {
     constructor(props, context) {
         super(props, context);

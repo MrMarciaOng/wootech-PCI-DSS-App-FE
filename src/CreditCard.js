@@ -7,7 +7,13 @@ import diners from './logo/diners.png';
 import jcb from './logo/jcb.png';
 import discover from './logo/discover.png'
 import './imageStyle.css';
-
+{/*
+  Project : WooTech PCI-DSS Compliant App
+  Team: Front-End
+  Owner: Surabhi Malani
+  Used: Cleave.js for formatting
+  Credits to logos images on google.com
+*/}
 class CreditCard extends React.Component {
 
     constructor(props, context) {

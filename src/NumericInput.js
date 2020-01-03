@@ -5,7 +5,12 @@ import {
     Input,
     Tooltip,
   } from "antd";
-
+{/*
+  Project : WooTech PCI-DSS Compliant App
+  Team: Front-End
+  Owner: Surabhi Malani
+  Used online sources for numericinput
+*/}
 export default class NumericInput extends React.Component {
   onChange = e => {
     const { value } = e.target;

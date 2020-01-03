@@ -3,6 +3,11 @@ import React from 'react'
 import MaskedInput from 'react-text-mask'
 import createNumberMask from 'text-mask-addons/dist/createNumberMask'
 import './imageStyle.css';
+{/*
+  Project : WooTech PCI-DSS Compliant App
+  Team: Front-End
+  Owner: Surabhi Malani
+*/}
 const defaultMaskOptions = {
   prefix: '$',
   suffix: '',
