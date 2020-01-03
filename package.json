@@ -2,14 +2,16 @@
   "dependencies": {
     "antd": "latest",
     "cleave.js": "1.5.3",
+    "gh-pages": "^2.1.1",
     "react": "latest",
     "react-dom": "latest",
     "react-recaptcha": "^2.3.10",
     "react-recaptcha-google": "^1.1.1"
   },
   "name": "xixi8",
-  "description": null,
+  "description": "null",
   "version": "0.0.25",
+  "homepage":"https://surxbhi.github.io/WIT-FE-Website",
   "devDependencies": {
     "react-scripts": "1.0.0"
   },
@@ -17,6 +19,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy":"gh-pages -d build"
   }
 }
+

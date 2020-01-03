@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "antd/dist/antd.css";
 import "./index.css";
-import Cleave from "cleave.js/react";
+import CreditCard from "./CreditCard";
 import NumericInput from "./NumericInput";
 import Security from './Security';
 import { loadReCaptcha } from 'react-recaptcha-google'
@@ -21,6 +21,8 @@ import {
   AutoComplete
 } from "antd";
 import { Layout } from "antd";
+import Cleave from "cleave.js/react";
+import PhoneNumber from "./PhoneNumber";
 
 const { Header, Footer, Sider, Content } = Layout;
 
@@ -156,16 +158,27 @@ class RegistrationForm extends React.Component {
 
     return (
       <Form className= "form-color"{...formItemLayout} onSubmit={this.handleSubmit}>
-        <Form.Item label="Name">
-          {getFieldDecorator("name", {
+        <Form.Item label="FirstName" >
+          {getFieldDecorator("first_name", {
             rules: [
               {
                 required: true,
-                message: "Please input your Name!"
+                message: "Please input your first name!"
               }
             ]
-          })(<Input />)}
+          })(<Input style={{ width: 300}}/>)}
         </Form.Item>
+        <Form.Item label="LastName">
+          {getFieldDecorator("last_name", {
+            rules: [
+              {
+                required: true,
+                message: "Please input your last name!"
+              }
+            ]
+          })(<Input style={{ width: 300}}/>)}
+        </Form.Item>
+        {/*
         <Form.Item label=" ">
           <Radio.Group defaultValue="a" buttonStyle="solid">
             <Radio.Button value="a">MasterCard</Radio.Button>
@@ -189,7 +202,17 @@ class RegistrationForm extends React.Component {
             </Select>
           )}
         </Form.Item>
-
+          */}
+        <Form.Item label="Name On Card">
+          {getFieldDecorator("name_on_card", {
+            rules: [
+              {
+                required: true,
+                message: "Please input the name on your card"
+              }
+            ]
+          })(<Input style={{ width: 400}}/>)}
+        </Form.Item>
         <Form.Item label="Card Number">
           {getFieldDecorator("card", {
             rules: [
@@ -199,15 +222,26 @@ class RegistrationForm extends React.Component {
               }
             ]
           })(
-            <Cleave style={{ width: "100%" }} options={{ creditCard: true }} />
+            <CreditCard />
           )}
         </Form.Item>
         <Form.Item label="CVV">
-          <NumericInput
-            style={{ width: 120 }}
+        {getFieldDecorator("cvv", {
+            rules: [
+              {
+                required: true,
+                message: "Please input your security number!"
+              }
+            ]
+          })(
+            <NumericInput 
+            style={{ width: 120}}
             value={this.state.value}
             onChange={this.onChange}
+            which ={4} 
           />
+          )}
+          
         </Form.Item>
         <Form.Item label="Biling Address 1">
           {getFieldDecorator("address1", {
@@ -227,7 +261,7 @@ class RegistrationForm extends React.Component {
             rules: [
               {
                 required: true,
-                message: "Please input your countrt!"
+                message: "Please input your country!"
               }
             ]
           })(<Input />)}
@@ -240,7 +274,12 @@ class RegistrationForm extends React.Component {
                 message: "Please input your zipcode!"
               }
             ]
-          })(<Input />)}
+          })(<NumericInput 
+            style={{ width: 120}}
+            value={this.state.value}
+            onChange={this.onChange}
+            which ={10} 
+          />)}
         </Form.Item>
 
         <Form.Item label="E-mail">
@@ -257,7 +296,7 @@ class RegistrationForm extends React.Component {
             ]
           })(<Input />)}
         </Form.Item>
-        <Form.Item label="Password" hasFeedback>
+        {/* <Form.Item label="Password" hasFeedback>
           {getFieldDecorator("password", {
             rules: [
               {
@@ -282,7 +321,7 @@ class RegistrationForm extends React.Component {
               }
             ]
           })(<Input.Password onBlur={this.handleConfirmBlur} />)}
-        </Form.Item>
+        </Form.Item> 
         <Form.Item
           label={
             <span>
@@ -314,11 +353,21 @@ class RegistrationForm extends React.Component {
               }
             ]
           })(<Cascader options={residences} />)}
-        </Form.Item>
-        <Form.Item label="test">
-          <Security
-          onloadCallback={this.onLoadRecaptcha}
-          verifyCallback={this.verifyCallback}/>
+        </Form.Item>*/}
+        <Form.Item
+          label="Captcha"
+        >
+          {getFieldDecorator("captcha", {
+                rules: [
+                  {
+                    required: true, 
+                    message: "We must make sure that your are a human."
+                  }
+                ]
+              })(<Security
+                onloadCallback={this.onLoadRecaptcha}
+                verifyCallback={this.verifyCallback}/>)}
+          
         </Form.Item>
         <Form.Item label="Phone Number">
           {getFieldDecorator("phone", {
@@ -327,28 +376,14 @@ class RegistrationForm extends React.Component {
             ]
           })(<Input addonBefore={prefixSelector} style={{ width: "100%" }} />)}
         </Form.Item>
-
-        <Form.Item
-          label="Captcha"
-          extra="We must make sure that your are a human."
-        >
-          <Row gutter={8}>
-            <Col span={12}>
-              {getFieldDecorator("captcha", {
-                rules: [
-                  {
-                    required: true,
-                    message: "Please input the captcha you got!"
-                  }
-                ]
-              })(<Input />)}
-            </Col>
-            <Col span={12}>
-              <Button>Get captcha</Button>
-              
-            </Col>
-          </Row>
+        <Form.Item label="Phone Number">
+          {getFieldDecorator("phoneNew", {
+            rules: [
+              { required: true, message: "Please input your phone number!" }
+            ]
+          })(<PhoneNumber  />)}
         </Form.Item>
+        
         <Form.Item {...tailFormItemLayout}>
           {getFieldDecorator("agreement", {
             valuePropName: "checked"
