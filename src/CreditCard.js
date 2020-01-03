@@ -102,6 +102,8 @@ class CreditCard extends React.Component {
                     ):(
                         <img alt="example" src={discover} className = "noLogoh3"  />
                     )}
+                    
+                    <p className = "extra"> We only accept these payment types ! </p>
             
             </div>
             

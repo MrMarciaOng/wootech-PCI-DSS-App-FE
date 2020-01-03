@@ -5,6 +5,7 @@ import "./index.css";
 import CreditCard from "./CreditCard";
 import NumericInput from "./NumericInput";
 import Security from './Security';
+import Amount from './Amount';
 import { loadReCaptcha } from 'react-recaptcha-google'
 import {
   Form,
@@ -158,6 +159,7 @@ class RegistrationForm extends React.Component {
 
     return (
       <Form className= "form-color"{...formItemLayout} onSubmit={this.handleSubmit}>
+        <br/>
         <Form.Item label="FirstName" >
           {getFieldDecorator("first_name", {
             rules: [
@@ -203,6 +205,16 @@ class RegistrationForm extends React.Component {
           )}
         </Form.Item>
           */}
+        <Form.Item label="Amount Payable">
+          {getFieldDecorator("amount", {
+            rules: [
+              {
+                required: true,
+                message: "Please input the name on your card"
+              }
+            ]
+          })(<Amount/>)}
+        </Form.Item>
         <Form.Item label="Name On Card">
           {getFieldDecorator("name_on_card", {
             rules: [
@@ -213,7 +225,7 @@ class RegistrationForm extends React.Component {
             ]
           })(<Input style={{ width: 400}}/>)}
         </Form.Item>
-        <Form.Item label="Card Number">
+        <Form.Item label="Card Number" >
           {getFieldDecorator("card", {
             rules: [
               {
@@ -383,7 +395,7 @@ class RegistrationForm extends React.Component {
             ]
           })(<PhoneNumber  />)}
         </Form.Item>
-        
+        {/*
         <Form.Item {...tailFormItemLayout}>
           {getFieldDecorator("agreement", {
             valuePropName: "checked"
@@ -393,6 +405,7 @@ class RegistrationForm extends React.Component {
             </Checkbox>
           )}
         </Form.Item>
+          */}
         <Form.Item {...tailFormItemLayout}>
           <Button type="primary" htmlType="submit">
             Pay
