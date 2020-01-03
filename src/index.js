@@ -500,7 +500,7 @@ const WrappedRegistrationForm = Form.create({ name: "register" })(
 
 ReactDOM.render(
   <div>
-    <DocumentTitle title="Payment Page" key="title" />,
+    <DocumentTitle title="Payment Page" />,
     <Layout>
       <Header>Welcome</Header>
       <Content>

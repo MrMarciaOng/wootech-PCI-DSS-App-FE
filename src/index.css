@@ -1,9 +1,7 @@
 .code-box-demo {
   text-align: center;
 }
-.title{
-  background-image: url("https://image.flaticon.com/icons/png/512/69/69881.png");
-}
+
 .ant-layout-header,
 .ant-layout-footer {
   background: #2c3e50;
