@@ -10,60 +10,52 @@ import { loadReCaptcha } from 'react-recaptcha-google'
 import {
   Form,
   Input,
-  Tooltip,
-  Icon,
-  Radio,
-  Cascader,
   Select,
-  Row,
-  Col,
-  Checkbox,
   Button,
   AutoComplete
 } from "antd";
 import { Layout } from "antd";
-import Cleave from "cleave.js/react";
 import PhoneNumber from "./PhoneNumber";
 
-const { Header, Footer, Sider, Content } = Layout;
+const { Header, Footer, Content } = Layout;
 
 const { Option } = Select;
 const AutoCompleteOption = AutoComplete.Option;
 
-const residences = [
-  {
-    value: "zhejiang",
-    label: "Zhejiang",
-    children: [
-      {
-        value: "hangzhou",
-        label: "Hangzhou",
-        children: [
-          {
-            value: "xihu",
-            label: "West Lake"
-          }
-        ]
-      }
-    ]
-  },
-  {
-    value: "jiangsu",
-    label: "Jiangsu",
-    children: [
-      {
-        value: "nanjing",
-        label: "Nanjing",
-        children: [
-          {
-            value: "zhonghuamen",
-            label: "Zhong Hua Men"
-          }
-        ]
-      }
-    ]
-  }
-];
+// const residences = [
+//   {
+//     value: "zhejiang",
+//     label: "Zhejiang",
+//     children: [
+//       {
+//         value: "hangzhou",
+//         label: "Hangzhou",
+//         children: [
+//           {
+//             value: "xihu",
+//             label: "West Lake"
+//           }
+//         ]
+//       }
+//     ]
+//   },
+//   {
+//     value: "jiangsu",
+//     label: "Jiangsu",
+//     children: [
+//       {
+//         value: "nanjing",
+//         label: "Nanjing",
+//         children: [
+//           {
+//             value: "zhonghuamen",
+//             label: "Zhong Hua Men"
+//           }
+//         ]
+//       }
+//     ]
+//   }
+// ];
 
 class RegistrationForm extends React.Component {
   state = {
