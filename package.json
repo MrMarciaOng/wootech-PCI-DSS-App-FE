@@ -3,6 +3,7 @@
     "antd": "latest",
     "cleave.js": "1.5.3",
     "gh-pages": "^2.1.1",
+    "mobiscroll": "^3.0.0-beta6",
     "react": "latest",
     "react-currency-input": "^1.3.6",
     "react-dom": "latest",

@@ -6,6 +6,7 @@ import CreditCard from "./CreditCard";
 import NumericInput from "./NumericInput";
 import Security from './Security';
 import Amount from './Amount';
+import ExpiryDate from './ExpiryDate';
 import { loadReCaptcha } from 'react-recaptcha-google'
 import {
   Form,
@@ -229,6 +230,19 @@ class RegistrationForm extends React.Component {
             <CreditCard />
           )}
         </Form.Item>
+        <Form.Item label="Expiration">
+        {getFieldDecorator("expiry", {
+            rules: [
+              {
+                required: true,
+                message: "Please input your expiration date!"
+              }
+            ]
+          })(
+            <ExpiryDate
+          />
+          )}
+        </Form.Item>
         <Form.Item label="CVV">
         {getFieldDecorator("cvv", {
             rules: [
@@ -245,7 +259,6 @@ class RegistrationForm extends React.Component {
             which ={4} 
           />
           )}
-          
         </Form.Item>
         <Form.Item label="Biling Address 1">
           {getFieldDecorator("address1", {
