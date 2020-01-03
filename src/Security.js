@@ -33,7 +33,7 @@ class Security extends Component {
             size="normal"
             data-theme="dark"            
             render="explicit"
-            sitekey="6Le62ssUAAAAAAXA_s2GKUjofjBywzdtqp5bF71j"
+            // sitekey="{special key}"
             onloadCallback={this.onLoadRecaptcha}
             verifyCallback={this.verifyCallback}
         />
