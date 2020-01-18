@@ -7,7 +7,13 @@ import { Layout } from "antd";
 import StripeCheckout from 'react-stripe-checkout';
 const { Header, Footer, Content } = Layout;
 
-
+{
+    /*
+    Project : WooTech PCI-DSS Compliant App
+    Team: Front-End
+    Owner: Surabhi Malani
+  */
+  }
 
 class Form extends React.Component{
     constructor(props) {
