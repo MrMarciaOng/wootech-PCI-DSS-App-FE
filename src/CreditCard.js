@@ -39,12 +39,11 @@ class CreditCard extends React.Component {
     }
     
     onCreditCardChange(event){
-        this.setState({creditCardRawValue: event.target.rawValue});
-        console.log(this.state.credot);
-        console.log(this.state.creditCardType);
-        console.log(this.state.creditCardRawValue);
-        this.props.callbackFromParent(this.state.creditCardRawValue);
-        
+        console.log("In onCreditCardChange: " + event.target.rawValue)
+        // this.setState({creditCardRawValue: event.target.rawValue});
+        // console.log(this.state.creditCardType);
+        // console.log(this.state.creditCardRawValue);
+        this.props.callbackFromParent(event.target.rawValue);
     }
     onCreditCardTypeChanged(type){
         console.log(type);

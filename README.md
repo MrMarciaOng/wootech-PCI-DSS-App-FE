@@ -27,3 +27,6 @@ Currently the program will not run as the secret key is not entered. Please go t
 ```
 Since we do not have a domain name yet, the reCaptcha will not work as desired.
 ------------------------------------------------------------------------------------------------------------------------
+![Payments Input 1](image1.png)
+![Payments Input 2](image2.png)
+![Upon click "Pay"](image3.png)

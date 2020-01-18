@@ -19,7 +19,7 @@ class PhoneNumber extends React.Component {
     }
     
     onPhoneChange(event) {
-        this.setState({phoneRawValue: event.target.rawValue});
+        this.props.callbackFromParent(event.target.rawValue);
     }
 
     render() {

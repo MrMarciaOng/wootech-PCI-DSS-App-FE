@@ -4,30 +4,26 @@ import "antd/dist/antd.css";
 import "./index.css";
 import CreditCard from "./CreditCard";
 import NumericInput from "./NumericInput";
-import Security from './Security';
-import Amount from './Amount';
-import ExpiryDate from './ExpiryDate';
-import { loadReCaptcha } from 'react-recaptcha-google'
-import DocumentTitle from 'react-document-title';
-import {injectStripe, ReactStripeElements} from 'react-stripe-elements';
-import {
-  Form,
-  Input,
-  Select,
-  Button,
-  AutoComplete,
-  Checkbox
-} from "antd";
+import Security from "./Security";
+import Amount from "./Amount";
+import ExpiryDate from "./ExpiryDate";
+import { DatePicker, } from 'antd';
+import { loadReCaptcha } from "react-recaptcha-google";
+import DocumentTitle from "react-document-title";
+import { injectStripe, ReactStripeElements } from "react-stripe-elements";
+import { Form, Input, Select, Button, AutoComplete, Checkbox } from "antd";
 import { Layout } from "antd";
 import PhoneNumber from "./PhoneNumber";
-{/*
+{
+  /*
   Project : WooTech PCI-DSS Compliant App
   Team: Front-End
   Owner: Surabhi Malani
   Background Image is © SURABHI MALANI (500PX)
-*/}
+*/
+}
 const { Header, Footer, Content } = Layout;
-
+const { MonthPicker } = DatePicker;
 const { Option } = Select;
 const AutoCompleteOption = AutoComplete.Option;
 
@@ -59,7 +55,7 @@ const AutoCompleteOption = AutoComplete.Option;
 //           {
 //             value: "zhonghuamen",
 //             label: "Zhong Hua Men"
-//           }
+//           }f
 //         ]
 //       }
 //     ]
@@ -70,33 +66,60 @@ class StripePayment extends React.Component {
   state = {
     confirmDirty: false,
     autoCompleteResult: [],
-    checked: true,
+    
   };
-  
+
   constructor(props) {
     super(props);
-    
     this.state = {
-        name_on_card : "",
-        listDataFromChild : null
+      name_on_card: "",
+      listDataFromChild: null,
+      checked: true,
+      phoneNewNumber: null,
     };
   }
-  myCallback = (dataFromChild) => {
+  myCallback = dataFromChild => {
+    console.log("Before delay: " + dataFromChild);
     this.setState({ listDataFromChild: dataFromChild });
-    console.log(this.state.listDataFromChild)
-    };
+  };
+  myPhoneNumberCallback = dataFromChild => {
+    console.log("Before delay: " + dataFromChild);
+    this.setState({ phoneNewNumber: dataFromChild });
+  };
   componentDidMount() {
     loadReCaptcha();
-    
-  };
+  }
   onChange = value => {
     this.setState({ value });
   };
+  handleCreditCardChange = value => {
+    console.log("Credit Card: " + this.state.listDataFromChild);
+    this.props.form.setFieldsValue({
+      card: this.state.listDataFromChild
+    });
+    console.log(this.props.form.getFieldValue("card"))
+  };
+  handlePhoneNumberChange = value => {
+    console.log("Credit Card: " + this.state.phoneNewNumber);
+    this.props.form.setFieldsValue({
+      phoneNew: this.state.phoneNewNumber
+    });
+    console.log(this.props.form.getFieldValue("phoneNew"))
+    //console.log(this.props.form.getFieldValue("expiry").format('YYYY-MM'))
+    
+  };
+   //handleSubmit = async  (e) => {
+  // async handleSubmit(e) {
   handleSubmit = e => {
+  
     e.preventDefault();
-    this.props.form.validateFieldsAndScroll((err, values) => {
+    this.props.form.validateFieldsAndScroll((err, fieldValues) => {
+      //console.log(this.props.form.getFieldValue("expiry").format('YYYY-MM'))
+      
       if (!err) {
-        console.log("Received values of form: ", values);
+        console.log("Received values of form: ", fieldValues);
+        this.props.callbackFromParent(fieldValues); //callback function
+        
       }
     });
   };
@@ -137,7 +160,7 @@ class StripePayment extends React.Component {
   toggleChecked = () => {
     this.setState({ checked: !this.state.checked });
   };
-  
+
   render() {
     const { getFieldDecorator } = this.props.form;
     const { autoCompleteResult } = this.state;
@@ -179,10 +202,13 @@ class StripePayment extends React.Component {
     // ));
 
     return (
-      
-      <Form className= "form-color" {...formItemLayout} onSubmit={this.handleSubmit}>
-        <br/>
-        <Form.Item label="FirstName" >
+      <Form
+        className="form-color"
+        {...formItemLayout}
+        onSubmit={this.handleSubmit}
+      >
+        <br />
+        <Form.Item label="FirstName">
           {getFieldDecorator("first_name", {
             rules: [
               {
@@ -190,7 +216,7 @@ class StripePayment extends React.Component {
                 message: "Please input your first name!"
               }
             ]
-          })(<Input style={{ width: 300}}/>)}
+          })(<Input style={{ width: 300 }} />)}
         </Form.Item>
         <Form.Item label="LastName">
           {getFieldDecorator("last_name", {
@@ -200,7 +226,7 @@ class StripePayment extends React.Component {
                 message: "Please input your last name!"
               }
             ]
-          })(<Input style={{ width: 300}}/>)}
+          })(<Input style={{ width: 300 }} />)}
         </Form.Item>
         {/*
         <Form.Item label=" ">
@@ -235,7 +261,7 @@ class StripePayment extends React.Component {
                 message: "Please input the amount payable !"
               }
             ]
-          })(<Amount/>)}
+          })(<Amount />)}
         </Form.Item>
         <Form.Item label="Name On Card">
           {getFieldDecorator("name_on_card", {
@@ -245,9 +271,9 @@ class StripePayment extends React.Component {
                 message: "Please input the name on your card !"
               }
             ]
-          })(<Input value = {this.state.name_on_card} style={{ width: 400}}/> ) }
+          })(<Input style={{ width: 400 }} />)}
         </Form.Item>
-        <Form.Item label="Card Number" >
+        <Form.Item label="Card Number">
           {getFieldDecorator("card", {
             rules: [
               {
@@ -255,27 +281,21 @@ class StripePayment extends React.Component {
                 message: "Please input your card number !"
               }
             ]
-          })(
-            <CreditCard callbackFromParent={this.myCallback}/> 
-          )}
+          })(<CreditCard callbackFromParent={this.myCallback} />)}
         </Form.Item>
-        
-        
+
         <Form.Item label="Expiration">
-        {getFieldDecorator("expiry", {
+          {getFieldDecorator("expiry", {
             rules: [
               {
                 required: true,
                 message: "Please input your expiration date !"
               }
             ]
-          })(
-            <ExpiryDate 
-          />
-          )}
+          })(<MonthPicker style={{ width: 100}}  placeholder = ""/>)}
         </Form.Item>
         <Form.Item label="CVV">
-        {getFieldDecorator("cvv", {
+          {getFieldDecorator("cvv", {
             rules: [
               {
                 required: true,
@@ -283,12 +303,12 @@ class StripePayment extends React.Component {
               }
             ]
           })(
-            <NumericInput 
-            style={{ width: 120}}
-            value={this.state.value}
-            onChange={this.onChange}
-            which ={4} 
-          />
+            <NumericInput
+              style={{ width: 120 }}
+              value={this.state.value}
+              onChange={this.onChange}
+              which={4}
+            />
           )}
         </Form.Item>
         <Form.Item label="Billing Address 1">
@@ -299,7 +319,7 @@ class StripePayment extends React.Component {
                 message: "Please input your billing address !"
               }
             ]
-          })(<Input />)}
+          })(<Input onChange = {this.handleCreditCardChange} />)}
         </Form.Item>
         <Form.Item label="Billing Address 2">
           {getFieldDecorator("address2", {})(<Input />)}
@@ -322,70 +342,91 @@ class StripePayment extends React.Component {
                 message: "Please input your billing zipcode !"
               }
             ]
-          })(<NumericInput 
-            style={{ width: 120}}
-            value={this.state.value}
-            onChange={this.onChange}
-            which ={10} 
-          />)}
+          })(
+            <NumericInput
+              style={{ width: 120 }}
+              value={this.state.value}
+              onChange={this.onChange}
+              which={10}
+            />
+          )}
         </Form.Item>
         <Form.Item label=" ">
-          {getFieldDecorator('remember', {
-            valuePropName: 'checked',
-            initialValue: true
-          })(<Checkbox  
-            checked={this.state.checked}
-            disabled={this.state.disabled} 
-            onClick={this.toggleChecked} 
-            style ={{color :"white"}} >Shipping Address is the same as Billing Address</Checkbox>)}
+          {getFieldDecorator("remember", {
+            valuePropName: "checked",
+            initialValue: true,
+          })(
+            <Checkbox
+              checked={this.state.checked}
+              disabled={this.state.disabled}
+              onClick={this.toggleChecked}
+              style={{ color: "white" }}
+            >
+              Shipping Address is the same as Billing Address
+            </Checkbox>
+          )}
         </Form.Item>
-        {(this.state.checked ) ? (
-          console.log("checked"
-          )
-          ): (
-            console.log("unchecked"),
-            <div>
-            <Form.Item label="Shipping Address 1">
-            {getFieldDecorator("shipaddress1", {
+        {this.state.checked
+          ? console.log("checked")
+          : (console.log("unchecked"),
+            (
+              <div>
+                <Form.Item label="Shipping Address 1">
+                  {getFieldDecorator("shipaddress1", {
+                    rules: [
+                      {
+                        required: true,
+                        message: "Please input your shipping address !"
+                      }
+                    ]
+                  })(<Input />)}
+                </Form.Item>
+                <Form.Item label="Shipping Address 2">
+                  {getFieldDecorator("shipaddress2", {})(<Input />)}
+                </Form.Item>
+                <Form.Item label="Shipping Address Country">
+                  {getFieldDecorator("ship_country", {
+                    rules: [
+                      {
+                        required: true,
+                        message: "Please input your country !"
+                      }
+                    ]
+                  })(<Input />)}
+                </Form.Item>
+                <Form.Item label="Shipping Address Zipcode">
+                  {getFieldDecorator("ship_zipcode", {
+                    rules: [
+                      {
+                        required: true,
+                        message: "Please input your zipcode !"
+                      }
+                    ]
+                  })(
+                    <NumericInput
+                      style={{ width: 120 }}
+                      value={this.state.value}
+                      onChange={this.onChange}
+                      which={10}
+                    />
+                  )}
+                </Form.Item>
+              </div>
+            ))}
+        <Form.Item label="Phone Number">
+          {getFieldDecorator("phone", {
             rules: [
-              {
-                required: true,
-                message: "Please input your shipping address !"
-              }
+              { required: true, message: "Please input your phone number !" }
             ]
-          })(<Input />)}
-          </Form.Item>
-          <Form.Item label="Shipping Address 2">
-         {getFieldDecorator("shipaddress2", {})(<Input />)}
-     </Form.Item>
-     <Form.Item label="Shipping Address Country">
-          {getFieldDecorator("ship_country", {
-            rules: [
-              {
-                required: true,
-                message: "Please input your country !"
-              }
-            ]
-          })(<Input />)}
+          })(<Input addonBefore={prefixSelector} style={{ width: "100%" }} />)}
         </Form.Item>
-        <Form.Item label="Shipping Address Zipcode">
-          {getFieldDecorator("ship_zipcode", {
+        <Form.Item label="Phone Number">
+          {getFieldDecorator("phoneNew", {
             rules: [
-              {
-                required: true,
-                message: "Please input your zipcode !"
-              }
+              { required: true, message: "Please input your phone number !" }
             ]
-          })(<NumericInput 
-            style={{ width: 120}}
-            value={this.state.value}
-            onChange={this.onChange}
-            which ={10} 
-          />)}
+          })(<PhoneNumber  callbackFromParent={this.myPhoneNumberCallback}/>)}
         </Form.Item>
-            </div>
-        ) 
-        }
         <Form.Item label="E-mail">
           {getFieldDecorator("email", {
             rules: [
@@ -398,7 +439,7 @@ class StripePayment extends React.Component {
                 message: "Please input your E-mail!"
               }
             ]
-          })(<Input />)}
+          })(<Input onChange = {this.handlePhoneNumberChange} />)}
         </Form.Item>
         {/* <Form.Item label="Password" hasFeedback>
           {getFieldDecorator("password", {
@@ -458,35 +499,22 @@ class StripePayment extends React.Component {
             ]
           })(<Cascader options={residences} />)}
         </Form.Item>*/}
-        <Form.Item
-          label="Captcha"
-        >
+        <Form.Item label="Captcha">
           {getFieldDecorator("captcha", {
-                rules: [
-                  {
-                    required: true, 
-                    message: "We must make sure that your are a human !"
-                  }
-                ]
-              })(<Security
-                onloadCallback={this.onLoadRecaptcha}
-                verifyCallback={this.verifyCallback}/>)}
-          
-        </Form.Item>
-        <Form.Item label="Phone Number">
-          {getFieldDecorator("phone", {
             rules: [
-              { required: true, message: "Please input your phone number !" }
+              {
+                required: false, //should be true
+                message: "We must make sure that your are a human !"
+              }
             ]
-          })(<Input addonBefore={prefixSelector} style={{ width: "100%" }} />)}
+          })(
+            <Security
+              onloadCallback={this.onLoadRecaptcha}
+              verifyCallback={this.verifyCallback}
+            />
+          )}
         </Form.Item>
-        <Form.Item label="Phone Number">
-          {getFieldDecorator("phoneNew", {
-            rules: [
-              { required: true, message: "Please input your phone number !" }
-            ]
-          })(<PhoneNumber  />)}
-        </Form.Item>
+        
         {/*
         <Form.Item {...tailFormItemLayout}>
           {getFieldDecorator("agreement", {
@@ -509,7 +537,7 @@ class StripePayment extends React.Component {
 }
 
 const WrappedRegistrationForm = Form.create({ name: "register" })(
-    StripePayment
+  StripePayment
 );
 
 // ReactDOM.render(
@@ -522,10 +550,10 @@ const WrappedRegistrationForm = Form.create({ name: "register" })(
 //       </Content>
 //       <Footer>Thank You</Footer>
 //     </Layout>
-    
+
 //   </div>,
 
 //   document.getElementById("container")
 // );
 
-export default injectStripe(WrappedRegistrationForm)
+export default injectStripe(WrappedRegistrationForm);
