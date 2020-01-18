@@ -1,5 +1,7 @@
 {
   "dependencies": {
+    "@types/react-stripe-elements": "^6.0.3",
+    "@types/stripe": "^7.13.20",
     "antd": "latest",
     "cleave.js": "1.5.3",
     "gh-pages": "^2.1.1",
@@ -10,7 +12,9 @@
     "react-dom": "latest",
     "react-recaptcha": "^2.3.10",
     "react-recaptcha-google": "^1.1.1",
+    "react-stripe-elements": "^6.0.1",
     "react-text-mask": "^5.4.3",
+    "stripe": "^8.4.0",
     "text-mask-addons": "^3.8.0"
   },
   "name": "xixi8",

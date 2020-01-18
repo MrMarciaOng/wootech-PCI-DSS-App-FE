@@ -18,6 +18,7 @@ class CreditCard extends React.Component {
 
     constructor(props, context) {
         super(props, context);
+        
         this.state = {
             creditCardType:     '',
             creditCardRawValue: '',
@@ -25,6 +26,7 @@ class CreditCard extends React.Component {
             dateRawValue:       '',
             numeralRawValue:    '',
             customRawValue:     '',
+            credot: '',
             open: true,
 
         };
@@ -38,7 +40,10 @@ class CreditCard extends React.Component {
     
     onCreditCardChange(event){
         this.setState({creditCardRawValue: event.target.rawValue});
+        console.log(this.state.credot);
         console.log(this.state.creditCardType);
+        console.log(this.state.creditCardRawValue);
+        this.props.callbackFromParent(this.state.creditCardRawValue);
         
     }
     onCreditCardTypeChanged(type){
@@ -70,8 +75,12 @@ class CreditCard extends React.Component {
                     {creditCard: true, 
                         onCreditCardTypeChanged: this.onCreditCardTypeChanged}}
                         onChange={this.onCreditCardChange}
-                        style={{ width: 180 }}/>
+                        
+                        style={{ width: 180 }
+                    }
+                        />
                     <br/>
+                    {console.log(this.state.creditCardRawValue)}
                     {(this.state.creditCardType === "visa") ? 
                     (
                         <img alt="example" src={visa} className = "yesLogo"  />
