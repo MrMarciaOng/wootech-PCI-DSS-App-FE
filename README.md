@@ -13,7 +13,7 @@ export default WrappedRegistrationForm;
 - added API call to backend in index.js (added emailID)
 -- need backend API call link in index.js (added)
 -- added google reCAPTCHA on wootech.mrmarciaong.com to email: wootechfe@gmail.com (refer to PCI-DSS google drive for password)
-
+![googleRECAPTCHA](image4.png)
 
 
 To run the file do:
