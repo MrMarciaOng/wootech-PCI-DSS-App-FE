@@ -1,3 +1,20 @@
+New changes 5 February
+
+- changed Stripepayment.js to be a class, not a Stripe component. 
+From
+```
+export default injectStripe(WrappedRegistrationForm);
+```
+To
+```
+export default WrappedRegistrationForm;
+```
+
+- added API call to backend in index.js (added emailID)
+-- need backend API call link (pending)
+
+
+
 To run the file do:
 ```
 npm i

@@ -123,7 +123,7 @@ class StripePayment extends React.Component {
       }
     });
   };
-
+/*
   handleConfirmBlur = e => {
     const { value } = e.target;
     this.setState({ confirmDirty: this.state.confirmDirty || !!value });
@@ -157,6 +157,7 @@ class StripePayment extends React.Component {
     }
     this.setState({ autoCompleteResult });
   };
+  */
   toggleChecked = () => {
     this.setState({ checked: !this.state.checked });
   };
@@ -556,4 +557,6 @@ const WrappedRegistrationForm = Form.create({ name: "register" })(
 //   document.getElementById("container")
 // );
 
-export default injectStripe(WrappedRegistrationForm);
+// calling stripe from backend
+//export default injectStripe(WrappedRegistrationForm);
+export default WrappedRegistrationForm;
