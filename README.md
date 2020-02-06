@@ -1,4 +1,4 @@
-New changes 5 February
+New changes 6 February
 
 - changed Stripepayment.js to be a class, not a Stripe component. 
 From
@@ -11,7 +11,8 @@ export default WrappedRegistrationForm;
 ```
 
 - added API call to backend in index.js (added emailID)
--- need backend API call link (pending)
+-- need backend API call link in index.js (added)
+-- added google reCAPTCHA on wootech.mrmarciaong.com to email: wootechfe@gmail.com (refer to PCI-DSS google drive for password)
 
 
 

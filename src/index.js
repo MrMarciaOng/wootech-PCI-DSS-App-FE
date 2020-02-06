@@ -33,9 +33,9 @@ class Form extends React.Component{
         // this.setState({amount: dataFromChild.amount}),
         // this.setState({phone_number: dataFromChild.phoneNew})
 
-        // START -- NEW ADDITIONS 5 FEB 2020
+        // START -- NEW ADDITIONS 6 FEB 2020
         // add restful API call
-        fetch('endpoint_api_backend_call/', {
+        fetch('wootech.api.mrmarciaong.com', { // added backend api call
           method: 'POST',
           body: JSON.stringify({
             full_name: dataFromChild.name_on_card,
@@ -51,7 +51,7 @@ class Form extends React.Component{
             alert(`We have sent information to backend`)
           );
         });
-        // END -- NEW ADDITIONS 5 FEB 2020
+        // END -- NEW ADDITIONS 6 FEB 2020
       };
     // onToken = (token) => {
     //     fetch('/save-stripe-token', {
