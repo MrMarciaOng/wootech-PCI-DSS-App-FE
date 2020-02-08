@@ -421,13 +421,7 @@ class StripePayment extends React.Component {
             ]
           })(<Input addonBefore={prefixSelector} style={{ width: "100%" }} />)}
         </Form.Item>
-        <Form.Item label="Phone Number">
-          {getFieldDecorator("phoneNew", {
-            rules: [
-              { required: true, message: "Please input your phone number !" }
-            ]
-          })(<PhoneNumber  callbackFromParent={this.myPhoneNumberCallback}/>)}
-        </Form.Item>
+
         <Form.Item label="E-mail">
           {getFieldDecorator("email", {
             rules: [
