@@ -35,11 +35,11 @@ class Form extends React.Component{
 
         // START -- NEW ADDITIONS 6 FEB 2020
         // add restful API call
-        fetch('wootech.api.mrmarciaong.com', { // added backend api call
+        fetch('wootech.api.mrmarciaong.com/invoice/billNewCustomer', { // added backend api call
           method: 'POST',
           body: JSON.stringify({
             full_name: dataFromChild.name_on_card,
-            credit_card_number1: dataFromChild.card,
+            credit_card_number: dataFromChild.card,
             amount_to_pay: dataFromChild.amount,
             expiry_month: dataFromChild.expiry.format('MM'),
             expiry_year: dataFromChild.expiry.format('YYYY'),
