@@ -1,8 +1,0 @@
-{
-  "dependencies": {
-    "antd": "latest",
-    "cleave.js": "1.5.3",
-    "react": "latest",
-    "react-dom": "latest"
-  }
-}
