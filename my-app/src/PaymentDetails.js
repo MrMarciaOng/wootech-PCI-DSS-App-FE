@@ -4,8 +4,91 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-
+import { useState } from 'react';
+import { loadStripe } from '@stripe/stripe-js';
+import {
+  CardElement,
+  Elements,
+  useElements,
+  useStripe
+} from '@stripe/react-stripe-js';
 // https://github.com/mui-org/material-ui/blob/master/docs/src/pages/getting-started/templates/checkout/AddressForm.js
+//https://stripe.com/docs/stripe-js#react
+
+const CARD_ELEMENT_OPTIONS = {
+  style: {
+    base: {
+      color: '#ffffff',
+      fontFamily: `"Roboto", "Helvetica", "Arial", sans-serif`,
+      fontSmoothing: 'antialiased',
+      fontSize: '16px',
+      '::placeholder': {
+        color: '#ffffff'
+      }
+    },
+    invalid: {
+      color: '#fa755a',
+      iconColor: '#fa755a'
+    }
+  }
+};
+const CheckoutForm = () => {
+  const [error, setError] = useState(null);
+  const stripe = useStripe();
+  const elements = useElements();
+
+  // Handle real-time validation errors from the card Element.
+  const handleChange = (event) => {
+    if (event.error) {
+      setError(event.error.message);
+    } else {
+      setError(null);
+    }
+  }
+
+  // Handle form submission.
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const card = elements.getElement(CardElement);
+    const result = await stripe.createToken(card)
+    if (result.error) {
+      // Inform the user if there was an error.
+      setError(result.error.message);
+    } else {
+      setError(null);
+      // Send the token to your server.
+      stripeTokenHandler(result.token);
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <div class="form-row">
+        <CardElement
+          id="card-element"
+          options={CARD_ELEMENT_OPTIONS}
+          onChange={handleChange}
+        />
+        <div className="card-errors" role="alert">{error}</div>
+      </div>
+      <button type="submit">Submit Payment</button>
+    </form>
+  );
+}
+// Setup Stripe.js and the Elements provider
+const stripePromise = loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
+// POST the token ID to your backend.
+async function stripeTokenHandler(token) {
+  const response = await fetch('/charge', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({token: token.id})
+  });
+
+  return response.json();
+}
 export default function PaymentDetails() {
   return (
     <React.Fragment>
@@ -92,6 +175,12 @@ export default function PaymentDetails() {
           />
         </Grid>
       </Grid>
+      <Grid>
+        <Elements stripe={stripePromise}>
+        <CheckoutForm />
+      </Elements>
+      </Grid>
+      
     </React.Fragment>
   );
 }
