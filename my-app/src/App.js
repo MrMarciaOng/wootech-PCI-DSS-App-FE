@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
@@ -12,8 +13,9 @@ import Paper from '@material-ui/core/Paper';
 import InvoiceNumber from "./InvoiceNumber"
 import AmountPayable from "./AmountPayable"
 import PaymentDetails from "./PaymentDetails"
+import Trial from "./Trial"
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
-
+import { Route, Link, BrowserRouter as Router } from 'react-router-dom';
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
@@ -62,29 +64,33 @@ const useStyles = makeStyles((theme) => ({
 
 const steps = ['Enter invoice number','Amount payable', 'Payment details', 'Review your Payment'];
 
-function getStepContent(step) {
+function GetStepContent(step) {
+  {console.log(window.location.pathname)}
   switch (step) {
-    case 0:
-      return <InvoiceNumber />;
+    
+    case 0:{
+      return <Trial/>
+    }
     case 1:
-        
-      return <AmountPayable/>;
+      return <Router>  <Route exact path="/amount"/> <AmountPayable/> </Router>;
     case 2:
-      return <PaymentDetails/>;
+      return <Router> <Route exact path="/payment"/> <PaymentDetails/> </Router>;
     case 3:
-      return <PaymentDetails/>;
+      return <Router> <Route exact path="/result"/> <PaymentDetails/> </Router>;
     default:
       throw new Error('Unknown step');
   }
 }
 
 export default function HorizontalLinearStepper() {
+
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
   
   const handleNext = () => {
     setActiveStep(activeStep + 1);
-  };
+  }; // add logic, if activeStep api
+  // postman 
 
   const handleBack = () => {
     setActiveStep(activeStep - 1);
@@ -133,13 +139,13 @@ export default function HorizontalLinearStepper() {
                 </React.Fragment>
               ) : (
                 <React.Fragment>
-                  {getStepContent(activeStep)}
+                  {GetStepContent(activeStep)}
                   <div className={classes.buttons}>
-                    {activeStep !== 0 && (
+                    {/* {activeStep !== 0 && (
                       <Button onClick={handleBack} className={classes.button}>
                         Previous
                       </Button>
-                    )}
+                    )} */}
                     <Button
                       variant="contained"
                       color="primary"
@@ -158,3 +164,7 @@ export default function HorizontalLinearStepper() {
     </ThemeProvider>
   );
 }
+ReactDOM.render(
+  <HorizontalLinearStepper/>,
+  document.getElementById('root')
+);
