@@ -27,14 +27,17 @@ const useStyles = makeStyles((theme) => ({
   };
  
   
-export default function InvoiceNumber() {
+const InvoiceNumber = function (props){
     const classes = useStyles();
     const [invoiceNumber, setInvoiceNumber] = useState('');
 
-    const handleClick = () => {
-        console.log(invoiceNumber);
-       
-    };
+    const handleChange = event => {
+      setInvoiceNumber(event.target.value)
+      //props.onChange(event.target.value);
+      props.callbackFromParent(event.target.value);
+  }
+  
+  
   if (window.location.pathname == "/")
   { return (
       <React.Fragment>
@@ -50,7 +53,8 @@ export default function InvoiceNumber() {
               fullWidth
               autoComplete="fname"
               value={invoiceNumber}
-              onChange={(event) => {setInvoiceNumber(event.target.value)}}
+              
+              onChange={handleChange}
             />
           <Router>
           
@@ -69,27 +73,35 @@ else if (window.location.pathname == "/correct"){
             Your Invoice Number
           </Typography>
           <React.Fragment>
-        {invoiceNumber != "" ? (
-          invoiceNumber === "C123" ? ( //end of 
-                    <React.Fragment>
                       <Typography variant="h5" gutterBottom>
                         Invoice {invoiceNumber} Registered
                       </Typography>
-                    </React.Fragment>
-                  ) : (
-                    <React.Fragment>
-                        <Typography variant="h5" gutterBottom>
-                        Creating New Invoice {invoiceNumber}
-                      </Typography>
-                    </React.Fragment>)) :(<React.Fragment>
-                        <Typography variant="h5" gutterBottom>
-                        
-                      </Typography>
-                    </React.Fragment>)
-        }
             </React.Fragment>
         </React.Fragment>
   );
+}
+else if (window.location.pathname == "/badrequest"){
+  return(
+  <React.Fragment>{console.log(window.location.pathname)}
+          <Typography variant="h6" gutterBottom>
+            Your Invoice Number
+          </Typography>
+          <React.Fragment>
+                      <Typography variant="h5" gutterBottom>
+                      Creating New Invoice {invoiceNumber}
+                      </Typography>
+            </React.Fragment>
+        </React.Fragment>
+  );
+}
+else if (window.location.pathname == "/process"){
+  return(
+    <React.Fragment>{console.log(window.location.pathname)}
+          <Typography variant="h6" gutterBottom>
+            Processing
+          </Typography>
+    </React.Fragment>
+  )
 }
 else {
   return(
@@ -97,6 +109,7 @@ else {
   )
 }
 }
+export default InvoiceNumber
 ReactDOM.render(
   <InvoiceNumber/>,
   document.getElementById('root')
